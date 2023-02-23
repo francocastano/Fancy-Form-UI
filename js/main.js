@@ -45,7 +45,7 @@ inputField.focus();
 progress.style.width = (position * 100) / questions.length + '%';
 
 // Add User Icon OR Back Arrow Depending on Question
-prevBtn.classname = position ? 'fas fa-arrow-left' : 'fas fa-arrow-user';
+prevBtn.className = position ? 'fas fa-arrow-left' : 'fas fa-arrow-user';
 
 showQuestion();
 }
@@ -90,7 +90,7 @@ function inputFail() {
     formBox.className = 'error';
     // Repeat Shake Motion - Set i to number of shakes
 
-    for (let i = 0; i < 6; i++)
+    for let (i = 0; i < 6; i++
 
 }
 
