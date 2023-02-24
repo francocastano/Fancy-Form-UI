@@ -1,88 +1,88 @@
-// Question array
-const questions = [
-    {question: 'Enter Your First Name'},
-    {question: 'Enter Your Last Name'},
-    {question: 'Enter Your Email', pattern:/^\S+@\S+\.\S+$/},
-    {question: 'Create A Password', type: 'password'}
-    
-];
+    // Question array
+    const questions = [
+        {question: 'Enter Your First Name'},
+        {question: 'Enter Your Last Name'},
+        {question: 'Enter Your Email', pattern:/^\S+@\S+\.\S+$/},
+        {question: 'Create A Password', type: 'password'}
+        
+    ];
 
-// Init DOM Elements
-let position = 0;
+    // Init DOM Elements
+    let position = 0;
 
-// Transition Times
-const shakeTime = 100;  //Shake Transition Time
-const switchTime = 200; //Transition Between Questions
+    // Transition Times
+    const shakeTime = 100;  //Shake Transition Time
+    const switchTime = 200; //Transition Between Questions
 
-// Init Position At First Question
+    // Init Position At First Question
 
-const formBox = document.querySelector('#form-box');
-const nextBtn = document.querySelector('#next-btn');
-const prevBtn = document.querySelector('#prev-btn');
-const inputGroup = document.querySelector('#input-group');
-const inputField = document.querySelector('#input-field');
-const inputLabel = document.querySelector('#input-label');
-const inputProgress = document.querySelector('#input-progress');
-const progress = document.querySelector('#progress-bar');
+    const formBox = document.querySelector('#form-box');
+    const nextBtn = document.querySelector('#next-btn');
+    const prevBtn = document.querySelector('#prev-btn');
+    const inputGroup = document.querySelector('#input-group');
+    const inputField = document.querySelector('#input-field');
+    const inputLabel = document.querySelector('#input-label');
+    const inputProgress = document.querySelector('#input-progress');
+    const progress = document.querySelector('#progress-bar');
 
-// Events
+    // Events
 
-// Input Field Enter Click
-inputField.addEventListener('keyup', e => {
-    if(e.keyCode == 13) {
-        validate();
+    // Input Field Enter Click
+    inputField.addEventListener('keyup', e => {
+        if(e.keyCode == 13) {
+            validate();
+        }
+    });
+
+    // Get Question On DOM Load
+    document.addEventListener('DOMContentLoaded', getQuestion);
+
+    // Next Buttom Click
+    nextBtn.addEventListener('click',validate);
+
+    // Functions
+    function getQuestion() {
+    // Get Question From Array & Add To MArkup
+    inputLabel.innerHTML = questions[position].question;
+    // Get Current Type
+    inputField.type = questions[position].type || 'text';
+    // Get Current Answer
+    inputField.value = questions[position].answer || '';
+    // Focus On Element
+    inputField.focus();
+
+    // Set Progress Bar Width - Variable to the question length
+    progress.style.width = (position * 100) / questions.length + '%';
+
+    // Add User Icon OR Back Arrow Depending on Question
+    prevBtn.className = position ? 'fas fa-arrow-left' : 'fas fa-user';
+
+    showQuestion();
     }
-});
 
-// Get Question On DOM Load
-document.addEventListener('DOMContentLoaded', getQuestion);
+    // Display Question To User
 
-// Next Buttom Click
-nextBtn.addEventListener('click',validate);
+    function showQuestion() {
+        inputGroup.style.opacity = 1;
+        inputProgress.style.transition = '';
+        inputProgress.style.width = '100%';
 
-// Functions
-function getQuestion() {
-// Get Question From Array & Add To MArkup
-inputLabel.innerHTML = questions[position].question;
-// Get Current Type
-inputField.type = questions[position].type || 'text';
-// Get Current Answer
-inputField.value = questions[position].answer || '';
-// Focus On Element
-inputField.focus();
+    }
 
-// Set Progress Bar Width - Variable to the question length
-progress.style.width = (position * 100) / questions.length + '%';
+    // Hide Question From User
+    function hideQuestion(){
+        inputGroup.style.opacity = 0;
+        inputLabel.style.marginLeft = 0;
+        inputProgress.style.width= 0;
+        inputProgress.style.transition = 'none';
+        inputGroup.style.border = null;
+    }
 
-// Add User Icon OR Back Arrow Depending on Question
-prevBtn.className = position ? 'fas fa-arrow-left' : 'fas fa-user';
+    // Transform To Create Shake Motion
+    function transform(x,y){
+        formBox.style.transform = `translate(${x}px,${y}px)`;
 
-showQuestion();
-}
-
-// Display Question To User
-
-function showQuestion() {
-    inputGroup.style.opacity = 1;
-    inputProgress.style.transition = '';
-    inputProgress.style.width = '100%';
-
-}
-
-// Hide Question From User
-function hideQuestion(){
-    inputGroup.style.opacity = 0;
-    inputLabel.style.marginLeft = 0;
-    inputProgress.style.width= 0;
-    inputProgress.style.transition = 'none';
-    inputGroup.style.border = null;
-}
-
-// Transform To Create Shake Motion
-function transform(x,y){
-    formBox.style.transform = `translate(${x}px,${y}px)`;
-
-}
+    }
 
 // Validate Field
 function validate(){
