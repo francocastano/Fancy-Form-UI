@@ -34,7 +34,7 @@ inputField.addEventListener('keyup', e => {
     }
 });
 
-// Get Question On DOM Lead
+// Get Question On DOM Load
 document.addEventListener('DOMContentLoaded', getQuestion);
 
 // Next Buttom Click
