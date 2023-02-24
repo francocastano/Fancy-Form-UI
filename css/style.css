@@ -12,7 +12,7 @@ h1.logo {
 }
 
 h1.end {
-  position: absolute;
+  position: relative;
   color: #fff;
   opacity: 0;
   transition: 0.8s ease-in-out;
@@ -121,7 +121,8 @@ h1.end {
   transition: width 0.5s ease-in-in;
 }
 
-.close #next-btn, .close #prev-btn {
+.close #next-btn,
+.close #prev-btn {
   color: #fff;
 }
 

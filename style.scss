@@ -19,10 +19,10 @@ h1.logo{
 }
 
 h1.end{
-  position: absolute;
+  position: relative;
   color: #fff;
   opacity: 0;
-  transition: 0.8s ease-in-out;
+  transition: 0.8s ease-in-out
 }
 
 #container{
@@ -140,7 +140,8 @@ h1.end{
 }
 
 .close{
-  #next-btn,#prev-btn{
+  #next-btn,
+  #prev-btn{
     color:#fff;
   }
 }

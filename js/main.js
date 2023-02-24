@@ -2,7 +2,7 @@
 const questions = [
     {question: 'Enter Your First Name'},
     {question: 'Enter Your Last Name'},
-    {question: 'Enter Your Email', patters:/^\S+@\S+\.\S+$/},
+    {question: 'Enter Your Email', pattern:/^\S+@\S+\.\S+$/},
     {question: 'Create A Password', type: 'password'}
     
 ];
@@ -29,7 +29,7 @@ const progress = document.querySelector('#progress-bar');
 
 // Input Field Enter Click
 inputField.addEventListener('keyup', e => {
-    if(e.keycode == 13) {
+    if(e.keyCode == 13) {
         validate();
     }
 });
@@ -47,7 +47,7 @@ inputLabel.innerHTML = questions[position].question;
 // Get Current Type
 inputField.type = questions[position].type || 'text';
 // Get Current Answer
-inputField.value = questions[position].anwser || '';
+inputField.value = questions[position].answer || '';
 // Focus On Element
 inputField.focus();
 
@@ -55,7 +55,7 @@ inputField.focus();
 progress.style.width = (position * 100) / questions.length + '%';
 
 // Add User Icon OR Back Arrow Depending on Question
-prevBtn.className = position ? 'fas fa-arrow-left' : 'fas fa-arrow-user';
+prevBtn.className = position ? 'fas fa-arrow-left' : 'fas fa-user';
 
 showQuestion();
 }
@@ -91,7 +91,7 @@ function validate(){
     {
         inputFail();
     } else {
-        InputPass();
+        inputPass();
     }
 }
 
@@ -100,8 +100,11 @@ function inputFail() {
     formBox.className = 'error';
     // Repeat Shake Motion - Set i to number of shakes
 
-    for (let i = 0; i < 6; i++)
-
+    for (let i = 0; i < 6; i++){
+        setTimeout(transform, shakeTime * i, ((i % 2) * 2 - 1) * 20, 0);
+        setTimeout(transform, shakeTime * 6, 0, 0);
+        inputField.focus();
+    }
 }
 
 
@@ -110,6 +113,12 @@ function inputPass(){
     formBox.className = '';
     setTimeout(transform, shakeTime * 0 , 0, 10);
     setTimeout(transform, shakeTime * 1, 0, 0);
+
+
+// Store Answer In Array
+questions[position].answer = inputField.value;
+
+
 // Increment Position
 position++;
 
@@ -122,10 +131,21 @@ if(questions[position]){
     hideQuestion();
     formBox.className = 'close';
     progress.style.width = '100%';
+
     // Form Complete
     formComplete();
     }
 }
 
 // All fields
-function formC
+function formComplete(){
+    const h1 = document.createElement('h1');
+    h1.classList.add('end');
+    h1.appendChild(
+        document.createTextNode(`Thanks ${questions[0].answer} You are registered and will get an email shortly`)
+    );
+    setTimeout(() => {
+        formBox.parentElement.appendChild(h1);
+        setTimeout(() => (h1.style.opacity = 1) , 50);
+    }, 1000);
+}
