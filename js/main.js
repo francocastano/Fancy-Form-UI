@@ -1,11 +1,14 @@
 // Question array
-const question = [
+const questions = [
     {question: 'Enter Your First Name'},
     {question: 'Enter Your Last Name'},
     {question: 'Enter Your Email', patters:/^\S+@\S+\.\S+$/},
     {question: 'Create A Password', type: 'password'}
     
 ];
+
+// Init DOM Elements
+let position = 0;
 
 // Transition Times
 const shakeTime = 100;  //Shake Transition Time
@@ -23,6 +26,13 @@ const inputProgress = document.querySelector('#input-progress');
 const progress = document.querySelector('#progress-bar');
 
 // Events
+
+// Input Field Enter Click
+inputField.addEventListener('keyup', e => {
+    if(e.keycode == 13) {
+        validate();
+    }
+});
 
 // Get Question On DOM Lead
 document.addEventListener('DOMContentLoaded', getQuestion);
@@ -64,7 +74,7 @@ function hideQuestion(){
     inputGroup.style.opacity = 0;
     inputLabel.style.marginLeft = 0;
     inputProgress.style.width= 0;
-    inputProgress.style,transition = 'none';
+    inputProgress.style.transition = 'none';
     inputGroup.style.border = null;
 }
 
@@ -77,7 +87,7 @@ function transform(x,y){
 // Validate Field
 function validate(){
     // Make Sure Pattern Matches If There Is One
-    if(!inputField.value.match( question[position].pattern || /.+/ ))
+    if(!inputField.value.match( questions[position].pattern || /.+/ ))
     {
         inputFail();
     } else {
@@ -90,13 +100,36 @@ function inputFail() {
     formBox.className = 'error';
     // Repeat Shake Motion - Set i to number of shakes
 
-    for (let i = 0; i < 6; i++)
+    for (let i = 0; i < 6; i++){
+        setTimeout(transform,shakeTime * i, ((i % 2) * 2 - 1) * 20, 0);
+    setTimeout(transform, shakeTime * 6, 0, 0);
+    inputField.focus();
+}
 
 }
 
 
 // Field input Pass
 function inputPass(){
-    
+    formBox.className = '';
+    setTimeout(transform, shakeTime * 0 , 0, 10);
+    setTimeout(transform, shakeTime * 1, 0, 0);
+// Increment Position
+position++;
+
+// If new Question, Hide Current and Get Next
+if(questions[position]){
+    hideQuestion();
+    getQuestion();
+} else {
+    // Remove If No More Questions
+    hideQuestion();
+    formBox.className = 'close';
+    progress.style.width = '100%';
+    // Form Complete
+    formComplete();
+    }
 }
 
+// All fields
+function formC
